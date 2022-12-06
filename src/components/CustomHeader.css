@@ -1,0 +1,52 @@
+.header {
+    top: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(red, green, blue, 0);
+    align-items: center;
+    min-height: 80px;
+    width: 100%;
+  }
+  
+  .menu_left {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .menu_right {
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  
+  .netflix_logo {
+    margin: 20px 20px 20px 40px;
+    max-width: 120px;
+    max-height: 40px;
+  }
+  
+  .netflix_logo:hover {
+    cursor: pointer;
+    margin-top: 22px;
+  }
+  
+  .menu_item {
+    color: lightgray;
+    background: none;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: smaller;
+    margin: 0px 5px;
+    padding: 3px 3px;
+    border: none;
+  }
+  
+  .menu_item:hover {
+    color: darkgrey;
+    cursor: pointer;
+    transition-delay: 0.1s; /* delays for 1 second */
+    -webkit-transition-delay: 0.1s; /* for Safari & Chrome */
+    
+  }

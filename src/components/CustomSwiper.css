@@ -1,0 +1,15 @@
+.swiperContainer {
+    margin: 5px;
+}
+
+.swiperHeader {
+    width: fit-content;
+    color:darkgray;
+    font-size: small;
+}
+
+.swiperHeader:hover {
+    color: white;
+    cursor: pointer;
+}
+
