@@ -25,7 +25,7 @@ function Main() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container" onScroll={() => {console.log("scrollign")}}>
       <CustomHeader></CustomHeader>
       <ReactPlayer
         playing={true}
@@ -36,7 +36,9 @@ function Main() {
         url={backgroundVideo}
         className="video"
       ></ReactPlayer>
-      <div className="video_overlay"></div>
+      <div className="video_overlay">
+        <div className="video_infos">hello test</div>
+      </div>
       <CustomSwiper topic="Erste Reihe">
         <CustomCard imgURL={testLogo} imgDescription="yehaw" />
         <CustomCard imgURL={testLogo2} imgDescription="yehaw" />

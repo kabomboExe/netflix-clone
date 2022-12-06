@@ -1,52 +1,76 @@
 .header {
-    top: 0;
-    left: 0;
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    background-color: rgba(red, green, blue, 0);
-    align-items: center;
-    min-height: 80px;
-    width: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0);
+  transition: 0.8s;
+  align-items: center;
+  min-height: 80px;
+  width: 100%;
+}
+
+.header_scrolled {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.menu_left {
+  display: flex;
+  justify-content: center;
+}
+
+.menu_right {
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.menu_item_dropdown {
+  display: none;
+}
+
+.MuiList-root {
+  background-color: black;
+  color: lightgray;
+}
+
+@media screen and (max-width: 768px) {
+  .menu_left .menu_item {
+    display: none;
   }
-  
-  .menu_left {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .menu_right {
-    display: flex;
-    justify-content: center;
-    margin-right: 10px;
-  }
-  
-  .netflix_logo {
-    margin: 20px 20px 20px 40px;
-    max-width: 120px;
-    max-height: 40px;
-  }
-  
-  .netflix_logo:hover {
-    cursor: pointer;
-    margin-top: 22px;
-  }
-  
-  .menu_item {
-    color: lightgray;
+  .menu_item_dropdown {
+    display: block;
     background: none;
-    letter-spacing: 1px;
-    font-weight: bold;
-    font-size: smaller;
-    margin: 0px 5px;
-    padding: 3px 3px;
     border: none;
+    color: lightgray;
   }
-  
-  .menu_item:hover {
-    color: darkgrey;
-    cursor: pointer;
-    transition-delay: 0.1s; /* delays for 1 second */
-    -webkit-transition-delay: 0.1s; /* for Safari & Chrome */
-    
-  }
+}
+
+.netflix_logo {
+  margin: 20px 20px 20px 40px;
+  max-width: 120px;
+  max-height: 40px;
+}
+
+.netflix_logo:hover {
+  cursor: pointer;
+}
+
+.menu_item {
+  color: lightgray;
+  background: none;
+  letter-spacing: 1px;
+  font-weight: bold;
+  font-size: smaller;
+  margin: 0px 5px;
+  padding: 3px 3px;
+  border: none;
+}
+
+.menu_item:hover {
+  color: darkgrey;
+  cursor: pointer;
+  transition-delay: 0.1s; /* delays for 1 second */
+  -webkit-transition-delay: 0.1s; /* for Safari & Chrome */
+}

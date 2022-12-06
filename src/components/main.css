@@ -4,7 +4,6 @@
   margin-top: -8%; /* Player ratio: 100 / (1280 / 720) */
 }
 
-
 .video {
   position: absolute;
   z-index: -2;
@@ -14,6 +13,9 @@
 
 .video_overlay {
   position: absolute;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   z-index: -1;
   top: -70px;
   left: 0;
@@ -27,3 +29,12 @@
   );
 }
 
+.video_infos {
+  color: aliceblue;
+}
+
+@media screen and (max-width: 768px) {
+  .video {
+    top: -100px;
+  }
+}
