@@ -14,7 +14,7 @@ function CustomCard(props) {
     >
       <CardMedia
         component="img"
-        height="140"
+        height="180"
         image={props.imgURL}
         alt={props.imgDescription}
       />

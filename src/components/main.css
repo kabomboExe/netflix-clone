@@ -1,14 +1,15 @@
-.container {
+.container_video {
   position: relative;
   padding-top: 56.25%;
-  margin-top: -8%; /* Player ratio: 100 / (1280 / 720) */
+  margin-bottom: -20%;
 }
 
 .video {
   position: absolute;
-  z-index: -2;
-  top: -70px;
+  z-index: -3;
+  top: 0;
   left: 0;
+  margin-top: -10%;
 }
 
 .video_overlay {
@@ -16,25 +17,22 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  z-index: -1;
-  top: -70px;
+  z-index: -2;
+  top: -30px;
   left: 0;
   width: 100%;
   height: 100%;
+  min-height: 300px;
   background-image: linear-gradient(
     rgba(54, 54, 54, 0.4),
-    rgba(54, 54, 54, 0.4),
-    rgba(54, 54, 54, 0.4),
-    rgba(0, 0, 0, 1)
+    rgba(22, 22, 22, 0.6),
+    rgba(22, 22, 22, 0.8),
+    rgba(22, 22, 22, 1)
   );
 }
 
-.video_infos {
-  color: aliceblue;
-}
-
 @media screen and (max-width: 768px) {
-  .video {
-    top: -100px;
+  .video_overlay {
+    font-size: xx-small;
   }
 }
