@@ -8,7 +8,7 @@ import testLogo2 from "../images/test/window1.png";
 import CustomSwiper from "./CustomSwiper";
 import CustomHeader from "./CustomHeader";
 import CustomVideoCard from "./CustomVideoCard";
-import FetchMovies from "../api/FetchMovies";
+import {fetchPopularMedia2022, fetchTVWatchProviders} from "../api/FetchData";
 
 function Main() {
   const [backgroundVideo, setBackgroundVideo] = useState("");
@@ -48,7 +48,9 @@ function Main() {
 
   useEffect(() => {
     setBackgroundVideo(videos[Math.floor(Math.random() * videos.length)]);
-    FetchMovies();
+    fetchPopularMedia2022("tv");
+    fetchPopularMedia2022("movie");
+    fetchTVWatchProviders();
   }, []);
 
   return (
