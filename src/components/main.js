@@ -3,60 +3,143 @@ import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 
 import CustomCard from "./CustomCard";
-import testLogo from "../images/test/window0.png";
-import testLogo2 from "../images/test/window1.png";
 import CustomSwiper from "./CustomSwiper";
 import CustomHeader from "./CustomHeader";
 import CustomVideoCard from "./CustomVideoCard";
-import {fetchPopularMedia2022, fetchTVWatchProviders} from "../api/FetchData";
+import useHttp from "../hooks/use-http";
+import { backgroundVideos } from "../data/backgroundVideos";
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 
 function Main() {
-  const [backgroundVideo, setBackgroundVideo] = useState("");
-  
-  const videos = [
-    {
-      title: "Narcos",
-      url: "https://vimeo.com/384025132",
-      info: "This dark gangster drama series is based on the true story of Colombia's notoriously violent and influential drug cartels."
-    },
-    {
-      title: "Stranger Things",
-      url: "https://vimeo.com/175708185",
-      info: "When a young boy disappears, his mother, a police chief and his friends must confront terrifying supernatural forces in order to get him back."
-    },
-    {
-      title: "Sex Education",
-      url: "https://vimeo.com/312793948",
-      info: "A teenage sex therapist mom teams up with a high school classmate to set up an unofficial sex therapy clinic at school."
-    },
-    {
-      title: "Money Heist",
-      url: "https://vimeo.com/443349692",
-      info: "An unusual group of robbers attempt to carry out the most perfect robbery in Spanish history - stealing 2.4 billion euros from the Royal Mint of Spain."
-    },
-    {
-      title: "Squid Game",
-      url: "https://vimeo.com/619166305",
-      info: "Hundreds of cash-strapped players accept a strange invitation to compete in children's games. Inside, a tempting prize awaits with deadly high stakes. A survival game that has a whopping 45.6 billion-won prize at stake."
-    },
-    {
-      title: "The Witcher",
-      url: "https://vimeo.com/371339543",
-      info: "Geralt of Rivia, a lone monster hunter, struggles to find his place in a world where humans often prove more evil than the beasts."
-    },
-  ];
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const videos = backgroundVideos;
+  const [backgroundVideo, setBackgroundVideo] = useState({});
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [popularTV, setPopularTV] = useState([]);
+  const [netflixOriginals, setNetflixOriginals] = useState([]);
+  const [comedyMovies, setComedyMovies] = useState([]);
+
+  function transformData(dataObj, whichTypeOfData) {
+    if (whichTypeOfData === "movie") {
+      setPopularMovies(
+        dataObj.results.map((result) => {
+          return {
+            id: result.id,
+            title: result.title,
+            release_date: result.release_date,
+            overview: result.overview,
+            img_path:
+              "https://image.tmdb.org/t/p/original" + result.poster_path,
+            vote_average: result.vote_average,
+          };
+        })
+      );
+    } else if (whichTypeOfData === "tv") {
+      setPopularTV(
+        dataObj.results.map((result) => {
+          return {
+            id: result.id,
+            title: result.original_name,
+            release_date: result.first_air_date,
+            overview: result.overview,
+            img_path:
+              "https://image.tmdb.org/t/p/original" + result.poster_path,
+            vote_average: result.vote_average,
+          };
+        })
+      );
+    } else if (whichTypeOfData === "netflixOG") {
+      setNetflixOriginals(
+        dataObj.results.map((result) => {
+          return {
+            id: result.id,
+            title: result.original_name,
+            release_date: result.first_air_date,
+            overview: result.overview,
+            img_path:
+              "https://image.tmdb.org/t/p/original" + result.poster_path,
+            vote_average: result.vote_average,
+          };
+        })
+      );
+    } else if (whichTypeOfData === "comedyMovie") {
+      setComedyMovies(
+        dataObj.results.map((result) => {
+          return {
+            id: result.id,
+            title: result.title,
+            release_date: result.release_date,
+            overview: result.overview,
+            img_path:
+              "https://image.tmdb.org/t/p/original" + result.poster_path,
+            vote_average: result.vote_average,
+          };
+        })
+      );
+    }
+    console.log(dataObj, whichTypeOfData);
+  }
+
+  const {
+    isLoading: moviesIsLoading,
+    error: moviesError,
+    sendRequest: fetchPopularMovies,
+  } = useHttp(
+    "movie",
+    "https://api.themoviedb.org/3/discover/movie?api_key=" +
+      apiKey +
+      "&sort_by=popularity.desc&language=en|de|es&with_original_language=en|de|es",
+    transformData
+  );
+
+  const {
+    isLoading: tvIsLoading,
+    error: tvError,
+    sendRequest: fetchPopularTV,
+  } = useHttp(
+    "tv",
+    "https://api.themoviedb.org/3/discover/tv?api_key=" +
+      apiKey +
+      "&sort_by=popularity.desc&language=en|de|es&with_original_language=en|de|es",
+    transformData
+  );
+
+  const {
+    isLoading: netflixOGIsLoading,
+    error: netflixOGError,
+    sendRequest: fetchNetflixOG,
+  } = useHttp(
+    "netflixOG",
+    "https://api.themoviedb.org/3/discover/tv?api_key=" +
+      apiKey +
+      "&with_networks=213",
+    transformData
+  );
+
+  const {
+    isLoading: comedyMoviesIsLoading,
+    error: comedyMoviesError,
+    sendRequest: fetchComedyMovies,
+  } = useHttp(
+    "comedyMovie",
+    "https://api.themoviedb.org/3/discover/movie?api_key=" +
+      apiKey +
+      "&with_genres=35",
+    transformData
+  );
 
   useEffect(() => {
     setBackgroundVideo(videos[Math.floor(Math.random() * videos.length)]);
-    fetchPopularMedia2022("tv");
-    fetchPopularMedia2022("movie");
-    fetchTVWatchProviders();
+    fetchNetflixOG();
+    fetchPopularMovies();
+    fetchPopularTV();
+    fetchComedyMovies();
   }, []);
 
   return (
     <div>
+      <CustomHeader></CustomHeader>
       <div className="container_video">
-        <CustomHeader></CustomHeader>
         <ReactPlayer
           playing={true}
           width="100%"
@@ -70,56 +153,64 @@ function Main() {
           <CustomVideoCard videoInfo={backgroundVideo}></CustomVideoCard>
         </div>
       </div>
-      <CustomSwiper topic="Erste Reihe">
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo2} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-      </CustomSwiper>
-      <CustomSwiper topic="Erste Reihe">
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo2} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-      </CustomSwiper>
-      <CustomSwiper topic="Erste Reihe">
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo2} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-      </CustomSwiper>
-      <CustomSwiper topic="Erste Reihe">
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo2} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-      </CustomSwiper>
-      <CustomSwiper topic="Erste Reihe">
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo2} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-        <CustomCard imgURL={testLogo} imgDescription="yehaw" />
-      </CustomSwiper>
+      <div className="swiper-area">
+        {netflixOGError && <p>{netflixOGError.message}</p>}
+        {netflixOGIsLoading && <p>Is Loading...</p>}
+        {netflixOriginals && (
+          <CustomSwiper topic="Netflix Originals TV Series">
+            {netflixOriginals.map((tv) => (
+              <CustomCard
+                key={tv.id}
+                imgURL={tv.img_path}
+                imgDescription={tv.title}
+              ></CustomCard>
+            ))}
+          </CustomSwiper>
+        )}
+
+        {moviesError && <p>{moviesError.message}</p>}
+        {moviesIsLoading && <p>Is Loading...</p>}
+        {popularMovies && (
+          <CustomSwiper topic="Popular Movies">
+            {popularMovies.map((movie) => (
+              <CustomCard
+                key={movie.id}
+                imgURL={movie.img_path}
+                imgTitle={movie.title}
+              ></CustomCard>
+            ))}
+          </CustomSwiper>
+        )}
+
+        {tvError && <p>{tvError.message}</p>}
+        {tvIsLoading && <p>Is Loading...</p>}
+        {popularTV && (
+          <CustomSwiper topic="Popular TV Series">
+            {popularTV.map((tv) => (
+              <CustomCard
+                key={tv.id}
+                imgURL={tv.img_path}
+                imgDescription={tv.title}
+              ></CustomCard>
+            ))}
+          </CustomSwiper>
+        )}
+
+        {comedyMoviesError && <p>{comedyMoviesError.message}</p>}
+        {comedyMoviesIsLoading && <p>Is Loading...</p>}
+        {comedyMovies && (
+          <CustomSwiper topic="Comedy Movies">
+            {comedyMovies.map((movie) => (
+              <CustomCard
+                key={movie.id}
+                imgURL={movie.img_path}
+                imgTitle={movie.title}
+              ></CustomCard>
+            ))}
+          </CustomSwiper>
+        )}
+      </div>
+      <footer>Made with <FavoriteRoundedIcon sx={{color:'#ff0000',paddingLeft:0.5,paddingRight:0.5}}/> by Kai F.</footer>
     </div>
   );
 }

@@ -38,7 +38,7 @@ function CustomSwiper(props) {
         modules={[Pagination, Navigation]}
       >
         {props.children.map((child) => (
-          <SwiperSlide className="swiperSlide">{child}</SwiperSlide>
+          <SwiperSlide key={child.key} className="swiperSlide">{child}</SwiperSlide>
         ))}
       </Swiper>
     </div>

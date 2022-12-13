@@ -1,5 +1,44 @@
 .video_card_container {
   color: aliceblue;
   max-width: 50%;
-  padding: 20px;
+  margin: 50px;
+  z-index: 5;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 10px 30px;
+  border: none;
+  font-size: large;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.play-button {
+  background-color: aliceblue;
+  color: black;
+  font-weight: bold;
+}
+
+.add-button {
+  background-color: rgba(22, 22, 22, 0.5);
+  color: aliceblue;
+}
+
+@media screen and (max-width: 768px) {
+  button {
+    font-size: xx-small;
+    padding: 5px 15px;
+    border-radius: 4px;
+  }
 }

@@ -1,8 +1,7 @@
 import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import { useState } from "react";
+import "./CustomCard.css";
 
 function CustomCard(props) {
   const [isHovering, setIsHovering] = useState(false);
@@ -12,11 +11,11 @@ function CustomCard(props) {
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <CardMedia
+      <CardMedia className="card-media"
         component="img"
-        height="180"
+        height="300"
         image={props.imgURL}
-        alt={props.imgDescription}
+        alt={props.imgTitle}
       />
     </Card>
   );
