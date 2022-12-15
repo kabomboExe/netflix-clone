@@ -8,7 +8,7 @@ import CustomHeader from "./CustomHeader";
 import CustomVideoCard from "./CustomVideoCard";
 import useHttp from "../hooks/use-http";
 import { backgroundVideos } from "../data/backgroundVideos";
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 
 function Main() {
   const apiKey = process.env.REACT_APP_API_KEY;
@@ -130,11 +130,14 @@ function Main() {
 
   useEffect(() => {
     setBackgroundVideo(videos[Math.floor(Math.random() * videos.length)]);
+    // eslint-disable-next-line
     fetchNetflixOG();
     fetchPopularMovies();
     fetchPopularTV();
     fetchComedyMovies();
-  }, []);
+  }, [
+    videos,
+  ]);
 
   return (
     <div>
@@ -161,8 +164,7 @@ function Main() {
             {netflixOriginals.map((tv) => (
               <CustomCard
                 key={tv.id}
-                imgURL={tv.img_path}
-                imgDescription={tv.title}
+                media={tv}
               ></CustomCard>
             ))}
           </CustomSwiper>
@@ -175,8 +177,7 @@ function Main() {
             {popularMovies.map((movie) => (
               <CustomCard
                 key={movie.id}
-                imgURL={movie.img_path}
-                imgTitle={movie.title}
+                media={movie}
               ></CustomCard>
             ))}
           </CustomSwiper>
@@ -189,8 +190,7 @@ function Main() {
             {popularTV.map((tv) => (
               <CustomCard
                 key={tv.id}
-                imgURL={tv.img_path}
-                imgDescription={tv.title}
+                media={tv}
               ></CustomCard>
             ))}
           </CustomSwiper>
@@ -203,14 +203,19 @@ function Main() {
             {comedyMovies.map((movie) => (
               <CustomCard
                 key={movie.id}
-                imgURL={movie.img_path}
-                imgTitle={movie.title}
+                media={movie}
               ></CustomCard>
             ))}
           </CustomSwiper>
         )}
       </div>
-      <footer>Made with <FavoriteRoundedIcon sx={{color:'#ff0000',paddingLeft:0.5,paddingRight:0.5}}/> by Kai F.</footer>
+      <footer>
+        Made with{" "}
+        <FavoriteRoundedIcon
+          sx={{ color: "#ff0000", paddingLeft: 0.5, paddingRight: 0.5 }}
+        />{" "}
+        by Kai F.
+      </footer>
     </div>
   );
 }
