@@ -1,12 +1,24 @@
-.swiperContainer {
-    margin: 0px 50px;
-}
 
+.swiperContainer {
+    padding: 30px 50px 0px 50px;
+}
 .swiperHeader {
     width: fit-content;
     color:darkgray;
     font-size: small;
-    padding-top: 50px;
 }
+
+.swiperSlide {
+    padding: 25px 0px 25px 10px;
+    opacity: 1;
+    transition: all 450ms;
+
+}
+.swiperSlide:hover {
+    transform: scale(1.1);
+    z-index:10;
+    cursor: pointer;
+}
+
 
 

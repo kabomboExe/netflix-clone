@@ -9,12 +9,10 @@ function CustomModal(props) {
   
   useEffect(() =>{
     setIsOpen(props.isOpen);
-    console.log(isOpen);
   },[]);
   
   function closeHandler() {
     setIsOpen(false);
-    props.closeHovering();
   }
   const style = {
     

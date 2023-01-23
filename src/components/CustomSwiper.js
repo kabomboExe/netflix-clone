@@ -1,6 +1,6 @@
 // Import Swiper styles
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
+import { Navigation } from "swiper";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -12,8 +12,8 @@ function CustomSwiper(props) {
     <div className="swiperContainer">
       <p className="swiperHeader">{props.topic}</p>
       <Swiper
+      className="swiper"
         navigation={true}
-        spaceBetween={5}
         breakpoints={{
           1378: {
             slidesPerView: 6,
@@ -32,10 +32,13 @@ function CustomSwiper(props) {
             slidesPerGroup: 2,
           },
         }}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[Pagination, Navigation]}
+
+        preventClicksPropagation={true}
+        preventClicks={true}
+        
+        slideToClickedSlide={false}
+        loop={true}
+        modules={[ Navigation]}
       >
         {props.children.map((child) => (
           <SwiperSlide key={child.key} className="swiperSlide">{child}</SwiperSlide>

@@ -5,35 +5,17 @@ import "./CustomCard.css";
 import CustomModal from "./CustomModal";
 
 function CustomCard(props) {
-  const [isHovering, setIsHovering] = useState(false);
-  const [width, setWidth] = useState(0);
-  const [height, setHeight] = useState(0);
-  const cardRef = useRef(0);
+  const [isClicked, setIsClicked] = useState(false);
 
-  const getCardSize = () => {
-    const newWidth = cardRef.current.clientWidth;
-    setWidth(newWidth);
 
-    const newHeight = cardRef.current.clientHeight;
-    setHeight(newHeight);
-
+  const openModalHandler = () => {
+    setIsClicked(true);
   };
 
-  const closeHoveringHandler = () =>{
-    setIsHovering(false);
-  }
-
-  useEffect(() => {
-    getCardSize();
-  }, [isHovering]);
 
   return (
     <div>
-      <Card
-        ref={cardRef}
-        className="card"
-        onMouseEnter={() => setIsHovering(true)}
-      >
+      <Card className="card" onClick={openModalHandler}>
         <CardMedia
           className="card-media"
           component="img"
@@ -42,9 +24,10 @@ function CustomCard(props) {
           alt={props.media.title}
         />
       </Card>
-      
 
-      {isHovering && <CustomModal closeHovering={closeHoveringHandler} isOpen={isHovering} media={props.media} cardWidth={width} cardHeight={height}></CustomModal>}
+      {isClicked && <CustomModal media={props.media} isOpen={true}></CustomModal>}
+
+
     </div>
   );
 }
