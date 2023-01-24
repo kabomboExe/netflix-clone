@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Homepage is: https://www.netflix-clone-kafehbre.netlify.app
+Homepage is: https://netflix-clone-kafehbre.netlify.app
 
 ## Available Scripts
 
