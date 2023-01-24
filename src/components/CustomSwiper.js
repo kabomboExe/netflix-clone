@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "./CustomSwiper.css";
-import { useEffect, useState } from "react";
 import useSizeChanged from "../hooks/use-size";
 
 function CustomSwiper(props) {

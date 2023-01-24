@@ -1,29 +1,51 @@
-import { useEffect, useState } from "react";
 import "./CustomModal.css";
 import Modal from "@mui/material/Modal";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
+import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
+import AddIcon from "@mui/icons-material/Add";
 
 function CustomModal(props) {
-  const [isOpen, setIsOpen] = useState(false);
-  
-  useEffect(() =>{
-    setIsOpen(props.isOpen);
-  },[]);
-  
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const dateString = new Date(props.media.release_date).toLocaleDateString(
+    "en-US",
+    options
+  );
+
   function closeHandler() {
-    setIsOpen(false);
+    props.closeModal();
   }
 
   return (
-
-      <Modal open={isOpen} onClose={closeHandler} className="modal-container">
-        <div className="modal">
-          {props.media.title}
-        
+    <Modal open={props.isOpen} onClose={closeHandler}>
+      <div className="modal">
+        <div className="modal-media-specs">
+          <p className="modal-header">{props.media.title}</p>
+          <p className="modal-date">Release Date: {dateString}</p>
+          <p className="modal-rating">Rating: {props.media.vote_average}/10</p>
+          <p className="modal-description">{props.media.overview}</p>
+          <div className="modal-buttons">
+            <button className="modal-play-button">
+              <PlayArrowRoundedIcon />
+              Play
+            </button>
+            <button className="modal-add-button">
+              <AddIcon />
+              My List
+            </button>
+          </div>
         </div>
-      </Modal>
 
+        <img
+          src={props.media.img_path}
+          alt={props.media.title}
+          className="modal-img"
+        ></img>
+      </div>
+    </Modal>
   );
 }
 

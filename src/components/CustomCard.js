@@ -1,17 +1,19 @@
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import "./CustomCard.css";
 import CustomModal from "./CustomModal";
 
 function CustomCard(props) {
   const [isClicked, setIsClicked] = useState(false);
 
-
   const openModalHandler = () => {
     setIsClicked(true);
   };
 
+  const closeModalHandler = () => {
+    setIsClicked(false);
+  };
 
   return (
     <div>
@@ -25,9 +27,13 @@ function CustomCard(props) {
         />
       </Card>
 
-      {isClicked && <CustomModal media={props.media} isOpen={true}></CustomModal>}
-
-
+      {isClicked && (
+        <CustomModal
+          media={props.media}
+          isOpen={true}
+          closeModal={closeModalHandler}
+        ></CustomModal>
+      )}
     </div>
   );
 }
