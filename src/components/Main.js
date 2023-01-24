@@ -39,12 +39,13 @@ function Main() {
         dataObj.results.map((result) => {
           return {
             id: result.id,
-            title: result.original_name,
+            title: result.name,
             release_date: result.first_air_date,
             overview: result.overview,
             img_path:
               "https://image.tmdb.org/t/p/original" + result.poster_path,
             vote_average: result.vote_average,
+
           };
         })
       );
@@ -53,7 +54,7 @@ function Main() {
         dataObj.results.map((result) => {
           return {
             id: result.id,
-            title: result.original_name,
+            title: result.name,
             release_date: result.first_air_date,
             overview: result.overview,
             img_path:
