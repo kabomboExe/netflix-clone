@@ -36,17 +36,6 @@
   color: lightgray;
 }
 
-@media screen and (max-width: 768px) {
-  .menu_left .menu_item {
-    display: none;
-  }
-  .menu_item_dropdown {
-    display: block;
-    background: none;
-    border: none;
-    color: lightgray;
-  }
-}
 
 .netflix_logo {
   margin: 20px 20px 20px 40px;
@@ -113,6 +102,15 @@
 }
 
 @media screen and (max-width: 768px) {
+  .menu_left .menu_item {
+    display: none;
+  }
+  .menu_item_dropdown {
+    display: block;
+    background: none;
+    border: none;
+    color: lightgray;
+  }
   .video_overlay {
     font-size: xx-small;
     top: 0px;

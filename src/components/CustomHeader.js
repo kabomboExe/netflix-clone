@@ -49,10 +49,10 @@ function CustomHeader() {
           </button>
           <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
             <MenuItem> <Link className="menu_item" to="/">Home</Link></MenuItem>
-            <MenuItem><Link className="menu_item" to="/watchlist">Watch List</Link></MenuItem>
+            <MenuItem><Link className="menu_item" to="/watchlist">My Watch List</Link></MenuItem>
           </Menu>
           <Link className="menu_item" to="/">Home</Link>
-          <Link className="menu_item" to="/watchlist">My List</Link>
+          <Link className="menu_item" to="/watchlist">My Watch List</Link>
         </div>
 
         <div className="menu_right">
