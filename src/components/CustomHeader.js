@@ -4,14 +4,24 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./CustomHeader.css";
 import netflix_logo from "../images/Netflix_2015_logo.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { Link } from 'react-router-dom';
+import ReactPlayer from "react-player";
+import CustomVideoCard from "./CustomVideoCard";
+import { backgroundVideos } from "../data/backgroundVideos";
 
 function CustomHeader() {
   const [color, setColor] = useState(true);
   const [anchorEl, setanchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  const [backgroundVideo, setBackgroundVideo] = useState({});
+  
+  useEffect(()=>{
+    const videos = backgroundVideos;
+    setBackgroundVideo(videos[Math.floor(Math.random() * videos.length)]);
+  },[]);
 
   const changeColor = () => {
     if (window.scrollY <= 0) {
@@ -38,17 +48,11 @@ function CustomHeader() {
             <ArrowDropDownIcon />
           </button>
           <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-            <MenuItem>Home</MenuItem>
-            <MenuItem>TV Shows</MenuItem>
-            <MenuItem>Movies</MenuItem>
-            <MenuItem>Recently Added</MenuItem>
-            <MenuItem>My List</MenuItem>
+            <MenuItem> <Link className="menu_item" to="/">Home</Link></MenuItem>
+            <MenuItem><Link className="menu_item" to="/watchlist">Watch List</Link></MenuItem>
           </Menu>
-          <button className="menu_item">Home</button>
-          <button className="menu_item">TV Shows</button>
-          <button className="menu_item">Movies</button>
-          <button className="menu_item">Recently Added</button>
-          <button className="menu_item">My List</button>
+          <Link className="menu_item" to="/">Home</Link>
+          <Link className="menu_item" to="/watchlist">My List</Link>
         </div>
 
         <div className="menu_right">
@@ -63,6 +67,20 @@ function CustomHeader() {
           </button>
         </div>
       </header>
+      <div className="container_video">
+        <ReactPlayer
+          playing={true}
+          width="100%"
+          height="100%"
+          muted={true}
+          loop={true}
+          url={backgroundVideo.url}
+          className="video"
+        ></ReactPlayer>
+        <div className="video_overlay">
+          <CustomVideoCard videoInfo={backgroundVideo}></CustomVideoCard>
+        </div>
+      </div>
     </div>
   );
 }

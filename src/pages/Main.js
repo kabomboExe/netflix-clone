@@ -1,19 +1,12 @@
 import "./Main.css";
-import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 
-import CustomCard from "./CustomCard";
-import CustomSwiper from "./CustomSwiper";
-import CustomHeader from "./CustomHeader";
-import CustomVideoCard from "./CustomVideoCard";
+import CustomCard from "../components/CustomCard";
+import CustomSwiper from "../components/CustomSwiper";
 import useHttp from "../hooks/use-http";
-import { backgroundVideos } from "../data/backgroundVideos";
-import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 
 function Main() {
   const apiKey = process.env.REACT_APP_API_KEY;
-  const videos = backgroundVideos;
-  const [backgroundVideo, setBackgroundVideo] = useState({});
   const [popularMovies, setPopularMovies] = useState([]);
   const [popularTV, setPopularTV] = useState([]);
   const [netflixOriginals, setNetflixOriginals] = useState([]);
@@ -88,8 +81,8 @@ function Main() {
   } = useHttp(
     "movie",
     "https://api.themoviedb.org/3/discover/movie?api_key=" +
-      apiKey +
-      "&sort_by=popularity.desc&language=en|de|es&with_original_language=en|de|es",
+    apiKey +
+    "&sort_by=popularity.desc&language=en|de|es&with_original_language=en|de|es",
     transformData
   );
 
@@ -100,8 +93,8 @@ function Main() {
   } = useHttp(
     "tv",
     "https://api.themoviedb.org/3/discover/tv?api_key=" +
-      apiKey +
-      "&sort_by=popularity.desc&language=en|de|es&with_original_language=en|de|es",
+    apiKey +
+    "&sort_by=popularity.desc&language=en|de|es&with_original_language=en|de|es",
     transformData
   );
 
@@ -112,8 +105,8 @@ function Main() {
   } = useHttp(
     "netflixOG",
     "https://api.themoviedb.org/3/discover/tv?api_key=" +
-      apiKey +
-      "&with_networks=213",
+    apiKey +
+    "&with_networks=213",
     transformData
   );
 
@@ -124,39 +117,21 @@ function Main() {
   } = useHttp(
     "comedyMovie",
     "https://api.themoviedb.org/3/discover/movie?api_key=" +
-      apiKey +
-      "&with_genres=35",
+    apiKey +
+    "&with_genres=35",
     transformData
   );
 
   useEffect(() => {
-    setBackgroundVideo(videos[Math.floor(Math.random() * videos.length)]);
     // eslint-disable-next-line
     fetchNetflixOG();
     fetchPopularMovies();
     fetchPopularTV();
     fetchComedyMovies();
-  }, [
-    videos,
-  ]);
+  }, []);
 
   return (
     <div>
-      <CustomHeader></CustomHeader>
-      <div className="container_video">
-        <ReactPlayer
-          playing={true}
-          width="100%"
-          height="100%"
-          muted={true}
-          loop={true}
-          url={backgroundVideo.url}
-          className="video"
-        ></ReactPlayer>
-        <div className="video_overlay">
-          <CustomVideoCard videoInfo={backgroundVideo}></CustomVideoCard>
-        </div>
-      </div>
       <div className="swiper-area">
         {netflixOGError && <p>{netflixOGError.message}</p>}
         {netflixOGIsLoading && <p>Is Loading...</p>}
@@ -209,14 +184,10 @@ function Main() {
             ))}
           </CustomSwiper>
         )}
+
+
       </div>
-      <footer>
-        Made with{" "}
-        <FavoriteRoundedIcon
-          sx={{ color: "#ff0000", paddingLeft: 0.5, paddingRight: 0.5 }}
-        />{" "}
-        by Kai F.
-      </footer>
+
     </div>
   );
 }
