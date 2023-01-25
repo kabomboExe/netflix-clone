@@ -2,8 +2,17 @@ import "./CustomModal.css";
 import Modal from "@mui/material/Modal";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import AddIcon from "@mui/icons-material/Add";
+import { MyListContext } from "../context/MyListContext";
+import { useContext } from "react";
+import RemoveIcon from "@mui/icons-material/Remove";
 
 function CustomModal(props) {
+  const [myList, setMyList] = useContext(MyListContext);
+
+  const mediaInMyList = myList.find((listItem) => {
+    return listItem.id === props.media.id;
+  });
+
   const options = {
     weekday: "long",
     year: "numeric",
@@ -19,6 +28,20 @@ function CustomModal(props) {
     props.closeModal();
   }
 
+  function addToMyListHandler() {
+    if (!mediaInMyList) {
+      setMyList([...myList, props.media]);
+    }
+  }
+
+  function removeFromMyListHandler() {
+    setMyList(
+      myList.filter((item) => {
+        return item !== props.media;
+      })
+    );
+  }
+
   return (
     <Modal open={props.isOpen} onClose={closeHandler}>
       <div className="modal">
@@ -32,10 +55,20 @@ function CustomModal(props) {
               <PlayArrowRoundedIcon />
               Play
             </button>
-            <button className="modal-add-button">
-              <AddIcon />
-              My List
-            </button>
+            {mediaInMyList ? (
+              <button
+                className="modal-remove-button"
+                onClick={removeFromMyListHandler}
+              >
+                <RemoveIcon />
+                My List
+              </button>
+            ) : (
+              <button className="modal-add-button" onClick={addToMyListHandler}>
+                <AddIcon />
+                My List
+              </button>
+            )}
           </div>
         </div>
 

@@ -1,12 +1,14 @@
-import './App.css';
-import Main from './components/Main';
+import "./App.css";
+import Main from "./components/Main";
+import { MyListProvider } from "./context/MyListContext";
 
 function App() {
   return (
-    <div>
-      <Main></Main>
-
-    </div>
+    <MyListProvider>
+      <div>
+        <Main></Main>
+      </div>
+    </MyListProvider>
   );
 }
 
