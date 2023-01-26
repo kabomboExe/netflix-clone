@@ -1,77 +1,52 @@
 import "./Main.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 import CustomCard from "../components/CustomCard";
 import CustomSwiper from "../components/CustomSwiper";
 import useHttp from "../hooks/use-http";
+import { FetchContext } from "../context/FetchContext";
 
 function Main() {
   const apiKey = process.env.REACT_APP_API_KEY;
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [popularTV, setPopularTV] = useState([]);
-  const [netflixOriginals, setNetflixOriginals] = useState([]);
-  const [comedyMovies, setComedyMovies] = useState([]);
+  const [fetchedData, setFetchedData] = useContext(FetchContext);
+
+  const objects = {};
 
   function transformData(dataObj, whichTypeOfData) {
-    if (whichTypeOfData === "movie") {
-      setPopularMovies(
-        dataObj.results.map((result) => {
-          return {
-            id: result.id,
-            title: result.title,
-            release_date: result.release_date,
-            overview: result.overview,
-            img_path:
-              "https://image.tmdb.org/t/p/original" + result.poster_path,
-            vote_average: result.vote_average,
-          };
-        })
-      );
-    } else if (whichTypeOfData === "tv") {
-      setPopularTV(
-        dataObj.results.map((result) => {
-          return {
-            id: result.id,
-            title: result.name,
-            release_date: result.first_air_date,
-            overview: result.overview,
-            img_path:
-              "https://image.tmdb.org/t/p/original" + result.poster_path,
-            vote_average: result.vote_average,
+    let data = [];
 
-          };
-        })
-      );
-    } else if (whichTypeOfData === "netflixOG") {
-      setNetflixOriginals(
-        dataObj.results.map((result) => {
-          return {
-            id: result.id,
-            title: result.name,
-            release_date: result.first_air_date,
-            overview: result.overview,
-            img_path:
-              "https://image.tmdb.org/t/p/original" + result.poster_path,
-            vote_average: result.vote_average,
-          };
-        })
-      );
-    } else if (whichTypeOfData === "comedyMovie") {
-      setComedyMovies(
-        dataObj.results.map((result) => {
-          return {
-            id: result.id,
-            title: result.title,
-            release_date: result.release_date,
-            overview: result.overview,
-            img_path:
-              "https://image.tmdb.org/t/p/original" + result.poster_path,
-            vote_average: result.vote_average,
-          };
-        })
-      );
+    if (whichTypeOfData === "movie" || whichTypeOfData === "comedyMovie") {
+
+      data = dataObj.results.map((result) => {
+        return {
+          id: result.id,
+          title: result.title,
+          release_date: result.release_date,
+          overview: result.overview,
+          img_path:
+            "https://image.tmdb.org/t/p/original" + result.poster_path,
+          vote_average: result.vote_average,
+        };
+      });
+
+    } else if (whichTypeOfData === "tv" || whichTypeOfData === "netflixOG") {
+
+      data = dataObj.results.map((result) => {
+        return {
+          id: result.id,
+          title: result.name,
+          release_date: result.first_air_date,
+          overview: result.overview,
+          img_path:
+            "https://image.tmdb.org/t/p/original" + result.poster_path,
+          vote_average: result.vote_average,
+
+        };
+      });
+
     }
-    console.log(dataObj, whichTypeOfData);
+    objects[whichTypeOfData] = data;
+
   }
 
   const {
@@ -124,10 +99,16 @@ function Main() {
 
   useEffect(() => {
     // eslint-disable-next-line
-    fetchNetflixOG();
-    fetchPopularMovies();
-    fetchPopularTV();
-    fetchComedyMovies();
+    if (Object.keys(fetchedData).length === 0) {
+      fetchNetflixOG();
+      fetchPopularMovies();
+      fetchPopularTV();
+      fetchComedyMovies();
+
+      setFetchedData(objects);
+    }
+
+
   }, []);
 
   return (
@@ -135,22 +116,23 @@ function Main() {
       <div className="swiper-area">
         {netflixOGError && <p>{netflixOGError.message}</p>}
         {netflixOGIsLoading && <p>Is Loading...</p>}
-        {netflixOriginals && (
+        {fetchedData["netflixOG"] && (
           <CustomSwiper topic="Netflix Originals TV Series">
-            {netflixOriginals.map((tv) => (
+            {fetchedData["netflixOG"].map((tv) => (
               <CustomCard
                 key={tv.id}
                 media={tv}
               ></CustomCard>
             ))}
           </CustomSwiper>
+
         )}
 
         {moviesError && <p>{moviesError.message}</p>}
         {moviesIsLoading && <p>Is Loading...</p>}
-        {popularMovies && (
+        {fetchedData["movie"] && (
           <CustomSwiper topic="Popular Movies">
-            {popularMovies.map((movie) => (
+            {fetchedData["movie"].map((movie) => (
               <CustomCard
                 key={movie.id}
                 media={movie}
@@ -161,9 +143,9 @@ function Main() {
 
         {tvError && <p>{tvError.message}</p>}
         {tvIsLoading && <p>Is Loading...</p>}
-        {popularTV && (
+        {fetchedData["tv"] && (
           <CustomSwiper topic="Popular TV Series">
-            {popularTV.map((tv) => (
+            {fetchedData["tv"].map((tv) => (
               <CustomCard
                 key={tv.id}
                 media={tv}
@@ -174,9 +156,9 @@ function Main() {
 
         {comedyMoviesError && <p>{comedyMoviesError.message}</p>}
         {comedyMoviesIsLoading && <p>Is Loading...</p>}
-        {comedyMovies && (
+        {fetchedData["comedyMovie"] && (
           <CustomSwiper topic="Comedy Movies">
-            {comedyMovies.map((movie) => (
+            {fetchedData["comedyMovie"].map((movie) => (
               <CustomCard
                 key={movie.id}
                 media={movie}

@@ -4,6 +4,7 @@ import { MyListProvider } from "./context/MyListContext";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import WatchListPage from "./pages/WatchListPage";
 import Root from "./pages/Root";
+import { FetchProvider } from "./context/FetchContext";
 
 const router = createBrowserRouter([
   {
@@ -19,9 +20,11 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <MyListProvider>
-      <RouterProvider router={router}></RouterProvider>
-    </MyListProvider>
+    <FetchProvider>
+      <MyListProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </MyListProvider>
+    </FetchProvider>
   );
 }
 
