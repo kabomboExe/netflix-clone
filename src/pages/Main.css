@@ -2,5 +2,19 @@
 
 .swiper-area{
   position: relative;
+  animation: rollIn 1s;
+  -webkit-animation: rollIn 1s;
+  -moz-animation: rollIn 1s;
+  -o-animation: rollIn 1s;
+  -ms-animation: rollIn 1s;
 }
 
+@keyframes rollIn {
+  0% {
+      left: -50px;
+  }
+
+  100% {
+      left: 0px;
+  }
+}

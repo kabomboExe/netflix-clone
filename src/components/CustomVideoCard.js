@@ -15,8 +15,8 @@ function CustomVideoCard(props) {
       <h1>{props.videoInfo.title}</h1>
       <p>{props.videoInfo.info}</p>
       <div className="buttons">
-        <button className="play-button" onClick={showList}><PlayArrowRoundedIcon/>Play</button>
-        <button className="add-button"><AddIcon/>My List</button>
+        <button className="play-button" onClick={() => alert('Just a dummy page!')}><PlayArrowRoundedIcon/>Play</button>
+        <button className="add-button" onClick={() => alert('Just a dummy! You can only add media from the swiper and search')}><AddIcon/>My List</button>
       </div>
     </div>
   );

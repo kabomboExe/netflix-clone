@@ -23,7 +23,7 @@
 
 .menu_right {
   display: flex;
-  justify-content: center;
+  justify-content:flex-end;
   margin-right: 10px;
 }
 
@@ -119,4 +119,21 @@
     margin-bottom: -10%;
   }
 
+}
+
+.search-input {
+  background-color: transparent;
+  border: 2px solid lightgray;
+  border-radius: 15px;
+  padding: 0px 5px;
+  color: lightgray;
+  animation: expand 1s;
+  outline: none;
+  
+}
+
+
+@keyframes expand{
+  0% {width: 0%;}
+  100% {width: 100%;}
 }

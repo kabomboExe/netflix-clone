@@ -4,6 +4,7 @@
 
 .card {
   outline: none;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 419px) {

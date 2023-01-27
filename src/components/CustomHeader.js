@@ -4,10 +4,10 @@ import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "./CustomHeader.css";
 import netflix_logo from "../images/Netflix_2015_logo.png";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactPlayer from "react-player";
 import CustomVideoCard from "./CustomVideoCard";
 import { backgroundVideos } from "../data/backgroundVideos";
@@ -17,11 +17,19 @@ function CustomHeader() {
   const [anchorEl, setanchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [backgroundVideo, setBackgroundVideo] = useState({});
-  
-  useEffect(()=>{
+
+  const [isInput, setIsInput] = useState(false);
+  const searchInputRef = useRef();
+  const [userInput, setUserInput] = useState('');
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
     const videos = backgroundVideos;
     setBackgroundVideo(videos[Math.floor(Math.random() * videos.length)]);
-  },[]);
+
+
+  }, []);
 
   const changeColor = () => {
     if (window.scrollY <= 0) {
@@ -38,6 +46,15 @@ function CustomHeader() {
   const handleClose = () => {
     setanchorEl(null);
   };
+
+  const searchHandler = () => {
+    setIsInput(!isInput);
+  }
+
+  const inputHandler = (event) => {
+    navigate('/search');
+    setUserInput(event.target.value);
+  }
 
   return (
     <div>
@@ -56,9 +73,12 @@ function CustomHeader() {
         </div>
 
         <div className="menu_right">
-          <button className="menu_item">
+          
+          {!isInput ? <button className="menu_item" onClick={searchHandler}>
             <SearchIcon />
-          </button>
+          </button> :
+            <input ref={searchInputRef} onChange={inputHandler} autoFocus={true} onBlur={searchHandler} className="search-input menu-item" type="text"></input>
+          }
           <button className="menu_item">
             <NotificationsOutlinedIcon />
           </button>

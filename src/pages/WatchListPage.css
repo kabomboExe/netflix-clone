@@ -2,11 +2,17 @@
     position: relative;
     padding: 100px 50px;
     color: aliceblue;
-    background-color: rgba(22,22,22,1);
+    background-color: rgba(22, 22, 22, 1);
     height: 100%;
     min-height: 100%;
+    animation: rollIn 1s;
+    -webkit-animation: rollIn 1s;
+    -moz-animation: rollIn 1s;
+    -o-animation: rollIn 1s;
+    -ms-animation: rollIn 1s;
 }
-.my-list{
+
+.my-list {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -14,11 +20,31 @@
 
 .card-container {
     margin: 40px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 450ms;
+
+}
+
+@keyframes rollIn {
+    0% {
+        left: -50px;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+
+.card-container:hover {
+    transform: scale(1.1);
+
 }
 
 @media screen and (max-width: 768px) {
     .card-container {
         margin: 20px;
     }
-  
-  }
+
+}
