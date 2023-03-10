@@ -7,6 +7,7 @@
   -moz-animation: rollIn 1s;
   -o-animation: rollIn 1s;
   -ms-animation: rollIn 1s;
+  margin-top: 80px;
 }
 
 @keyframes rollIn {

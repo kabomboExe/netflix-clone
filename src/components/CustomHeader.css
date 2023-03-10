@@ -24,7 +24,7 @@
 .menu_right {
   display: flex;
   justify-content:flex-end;
-  margin-right: 10px;
+  margin-right: 30px;
 }
 
 .menu_item_dropdown {
